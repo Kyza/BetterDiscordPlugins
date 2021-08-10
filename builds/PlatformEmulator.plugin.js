@@ -1,6 +1,6 @@
 /**
  * @name PlatformEmulator
- * @version 1.0.0
+ * @version 1.0.1
  * @description Lets you trick Discord into thinking you're running on a different operating system.
  * @author Kyza
  * @source https://github.com/Kyza/BetterDiscordPlugins/src/PlatformEmulator
@@ -32,7 +32,7 @@
 const config = {
 	"info": {
 		"name": "Platform Emulator",
-		"version": "1.0.0",
+		"version": "1.0.1",
 		"description": "Lets you trick Discord into thinking you're running on a different operating system.",
 		"authors": [{
 			"name": "Kyza",
@@ -42,7 +42,6 @@ const config = {
 		"github": "https://github.com/Kyza/BetterDiscordPlugins/src/PlatformEmulator",
 		"github_raw": "https://raw.githubusercontent.com/Kyza/BetterDiscordPlugins/master/builds/PlatformEmulator.plugin.js"
 	},
-	"changelog": [],
 	"build": {
 		"zlibrary": true,
 		"scssHash": true,
