@@ -42,13 +42,7 @@ const config = {
 		"github": "https://github.com/Kyza/BetterDiscordPlugins/src/PlatformEmulator",
 		"github_raw": "https://raw.githubusercontent.com/Kyza/BetterDiscordPlugins/master/builds/PlatformEmulator.plugin.js"
 	},
-	"changelog": [{
-		"type": "improved",
-		"title": "L",
-		"items": [
-			"L"
-		]
-	}],
+	"changelog": [],
 	"build": {
 		"zlibrary": true,
 		"scssHash": true,
