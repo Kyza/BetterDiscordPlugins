@@ -1,0 +1,21 @@
+{
+	"build": {
+		"watch": true,
+		"folder": "./src/[plugin]",
+		"readme": true,
+		"filename": "[name].plugin.js"
+	},
+	"discord": {
+		"userId": "220584715265114113",
+		"username": "Kyza"
+	},
+	"github": {
+		"username": "Kyza",
+		"branch": "master",
+		"repo": "BetterDiscordPlugins"
+	},
+	"paths": {
+		"bdfolder": "C:/Users/Kyza/AppData/Roaming/BetterDiscord",
+		"release_folder": "<seret>"
+	}
+}

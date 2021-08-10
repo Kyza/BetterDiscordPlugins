@@ -1,0 +1,15 @@
+{
+	"name": "better-discord-plugins",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "Kyza",
+	"license": "UNLINCENSED",
+	"dependencies": {
+		"bdbuilder": "^1.2.6-preview.4"
+	}
+}
