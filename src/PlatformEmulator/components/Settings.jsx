@@ -3,11 +3,8 @@ import { storage, set, get } from "../storage.js";
 import forceUpdateApp from "../forceUpdateApp.js";
 import { reset } from "../WebSocket.js";
 
-// import modalStyles from "./Modal.scss";
-
 const { useState } = React;
 
-const Text = WebpackModules.getByDisplayName("Text");
 const Header = WebpackModules.getByDisplayName("Header");
 const FormDivider = WebpackModules.getByDisplayName("FormDivider");
 const RadioGroup = WebpackModules.getByDisplayName("RadioGroup");
@@ -27,9 +24,11 @@ export default function Settings() {
 				]}
 				value={platform}
 				onChange={(e) => {
-					setPlatform(e.value);
-					set("platform", e.value);
-					forceUpdateApp();
+					if (e.value !== platform) {
+						setPlatform(e.value);
+						set("platform", e.value);
+						forceUpdateApp();
+					}
 				}}
 			/>
 			<Header>WebSocket Spoof</Header>
@@ -47,9 +46,11 @@ export default function Settings() {
 				]}
 				value={websocket}
 				onChange={(e) => {
-					setWebsocket(e.value);
-					set("websocket", e.value);
-					reset();
+					if (e.value !== websocket) {
+						setWebsocket(e.value);
+						set("websocket", e.value);
+						reset();
+					}
 				}}
 			/>
 		</>

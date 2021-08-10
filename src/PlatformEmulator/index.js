@@ -4,7 +4,7 @@ import Settings from "./components/Settings.jsx";
 import forceUpdateApp from "./forceUpdateApp.js";
 import { get } from "./storage.js";
 import { Platforms } from "./Platforms.js";
-import { reset } from "./WebSocket.js";
+import { ws, reset } from "./WebSocket.js";
 
 const Platform = WebpackModules.getModule((m) => m.PlatformTypes?.WINDOWS);
 
@@ -25,6 +25,8 @@ export default class PlatformEmulator extends BasePlugin {
 		}
 
 		Patcher.before(WebSocket.prototype, "send", (that, args) => {
+			ws = that;
+			if (!(args[0] instanceof ArrayBuffer)) return;
 			const data = Packer.unpack(args[0]);
 
 			if (data.op === 2) {
@@ -59,12 +61,16 @@ export default class PlatformEmulator extends BasePlugin {
 		});
 
 		forceUpdateApp();
-		reset();
+		if (get("websocket") !== "default") {
+			reset();
+		}
 	}
 	onStop() {
 		Patcher.unpatchAll();
 		forceUpdateApp();
-		reset();
+		if (get("websocket") !== "default") {
+			reset();
+		}
 	}
 
 	getSettingsPanel() {
