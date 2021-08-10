@@ -349,17 +349,18 @@ function buildPlugin([BasePlugin, PluginApi]) {
 				}
 			}
 			const FluxDisptacher = external_PluginApi_namespaceObject.WebpackModules.getByProps("_dispatch");
+			let ws;
 			function die() {
 				FluxDisptacher.unsubscribe("MESSAGE_CREATE", die);
 				throw "Resetting WebSocket.";
 			}
 			function WebSocket_reset() {
-				try {
+				if (!ws) try {
 					FluxDisptacher.subscribe("MESSAGE_CREATE", die);
 					FluxDisptacher.dispatch({
 						type: "MESSAGE_CREATE"
 					});
-				} catch {}
+				} catch {} else ws.close();
 			}
 			var React = __webpack_require__(832);
 			const {
@@ -389,9 +390,11 @@ function buildPlugin([BasePlugin, PluginApi]) {
 					}],
 					value: platform,
 					onChange: e => {
-						setPlatform(e.value);
-						set("platform", e.value);
-						forceUpdateApp();
+						if (e.value !== platform) {
+							setPlatform(e.value);
+							set("platform", e.value);
+							forceUpdateApp();
+						}
 					}
 				}), React.createElement(Header, null, "WebSocket Spoof"), React.createElement(FormDivider, {
 					style: {
@@ -426,9 +429,11 @@ function buildPlugin([BasePlugin, PluginApi]) {
 					}],
 					value: websocket,
 					onChange: e => {
-						setWebsocket(e.value);
-						set("websocket", e.value);
-						WebSocket_reset();
+						if (e.value !== websocket) {
+							setWebsocket(e.value);
+							set("websocket", e.value);
+							WebSocket_reset();
+						}
 					}
 				}));
 			}
@@ -439,6 +444,8 @@ function buildPlugin([BasePlugin, PluginApi]) {
 				onStart() {
 					for (const [functionName, platformName] of Object.entries(Platforms)) external_PluginApi_namespaceObject.Patcher.instead(PlatformEmulator_Platform.default, `is${functionName}`, (() => get("platform").toLowerCase() === platformName.toLowerCase()));
 					external_PluginApi_namespaceObject.Patcher.before(WebSocket.prototype, "send", ((that, args) => {
+						ws = that;
+						if (!(args[0] instanceof ArrayBuffer)) return;
 						const data = Packer.unpack(args[0]);
 						if (2 === data.op) switch (get("websocket")) {
 							case "win32":
@@ -488,12 +495,12 @@ function buildPlugin([BasePlugin, PluginApi]) {
 						return args;
 					}));
 					forceUpdateApp();
-					WebSocket_reset();
+					if ("default" !== get("websocket")) WebSocket_reset();
 				}
 				onStop() {
 					external_PluginApi_namespaceObject.Patcher.unpatchAll();
 					forceUpdateApp();
-					WebSocket_reset();
+					if ("default" !== get("websocket")) WebSocket_reset();
 				}
 				getSettingsPanel() {
 					return PlatformEmulator_React.createElement(Settings, null);
